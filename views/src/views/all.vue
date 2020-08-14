@@ -1,16 +1,17 @@
 <template>
   <div class="display">
-    <carsAll></carsAll>
+    <carsAll/>
   </div>
 </template>
 
 <script>
-import carsAll from '@/components/cars_all.vue';
+import carsAll from '@/components/carsAll.vue';
 
 export default {
   name: 'all',
   components: {
-    cars_all,
+    carsAll,
   },
+
 };
 </script>

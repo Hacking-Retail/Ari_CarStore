@@ -10,7 +10,7 @@ export default {
 
   mounted () {
     axios
-      .get('http://localhost/api/v1/resources/cars/all')
+      .get('http://localhost:5000/api/v1/resources/cars/all')
       .then(response => (this.info = response))
   }
 
