@@ -101,21 +101,6 @@ def cars_filter():
     return jsonify(data_result)
 
 
-#filter id cars route
-@app.route('/api/v1/resources/cars', methods=['GET'])
-def cars_filter_id():
-    if 'id' in request.args:
-        id = int(request.args['id'])
-    else:
-        return "Error: No id field provided. Please specify an id."
-    results = []
-
-    for car in data:
-        if car['id'] == id:
-            results.append(car)
-
-    return jsonify(results)
-
 #error 404 page
 @app.errorhandler(404)
 def page_not_found(e):
