@@ -24,7 +24,7 @@ def home():
 #all cars route
 @app.route('/api/cars/all', methods=['GET'])
 def cars_all():
-    conn = sqlite3.connect('C:/sqlite/cars.db')
+    conn = sqlite3.connect('cars.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     all_cars = cur.execute('SELECT * FROM cars;').fetchall()
@@ -110,7 +110,7 @@ def cars_filter():
     #remove the last "AND" and replace with ";"
     query = query[:-4] + ';'
 
-    conn = sqlite3.connect('C:/sqlite/cars.db')
+    conn = sqlite3.connect('cars.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
 
