@@ -1,29 +1,30 @@
 '''API'''
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder = "../dist/static",
+            template_folder = "../dist")
+
 app.config["DEBUG"] = True
 
 #get datas
 data = json.load(open('Dataset-Hackathon.json'))
 
-#basic route
-@app.route('/', methods=['GET'])
-def index():
-    return """ <h1> Bienvenue sur CarStore3000 </h1> 
-            <p>Commencez dès maintenant à chercher votre futur véhicule d'occasion</p>
-            <a href="">Commencer la recherche</a>
-            """
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template("index.html")
 
 
 #all cars route
-@app.route('/api/v1/resources/cars/all', methods=['GET'])
+@app.route('/api/cars/all', methods=['GET'])
 def cars_all():
-    return jsonify(data)
+    return jsonify({'cars':data,
+                    'status':'success'})
 
 #filter cars route
-@app.route('/api/v1/resources/cars', methods=['GET'])
+@app.route('/api/cars', methods=['GET'])
 def cars_filter():
     params = request.args
     
