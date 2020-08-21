@@ -8,7 +8,7 @@
         <form>
             <select name="maker" id="maker-select">
                 <option value="">--Maker--</option>
-                <option value="alpha-romeo">Alpha Romeo</option>
+                <option value="alfa-romeo">Alfa Romeo</option>
                 <option value="audi">Audi</option>
                 <option value="bmw">BMW</option>
                 <option value="chevrolet">Chevrolet</option>
@@ -61,6 +61,12 @@
                 <option value="white">White</option>
                 <option value="yellow">Yellow</option>
             </select>
+            <!--<select name="price" id="price-select">
+                <option value="">--Price Range--</option>
+                <option value="500-1500">From 500 to 1500</option>
+                <option value="1500-2500">From 1500 to 2500</option>
+            </select>-->
+            
         </form>
         <input type="submit" value="Search" @click="getCars">
         <br><br>
@@ -168,6 +174,7 @@ export default {
     filter() {
         var m = document.getElementById("maker-select");
         var c = document.getElementById("color-select");
+        // var p = document.getElementById("price-select");
 
         if(m != null) {
             var maker = m.options[m.selectedIndex].value;
@@ -183,22 +190,47 @@ export default {
             var color = "";
         }
 
-        console.log("maker : " + maker)
-        console.log("color : " + color)
+        // if(p != null) {
+        //     var price = p.options[p.selectedIndex].value;
+        // }
+        // else {
+        //     var price = "";
+        // }
+
+    
         if(maker != "" && color != "") {
-            return  `http://localhost:5000/api/cars?maker=${maker}&color_slug=${color}`
+            var path = `http://localhost:5000/api/cars?maker=${maker}&color_slug=${color}`
+            // path = path + '&' + this.getRangePrice(price)
         }
         else if(maker != "" && color == "") {
-            return  `http://localhost:5000/api/cars?maker=${maker}`
+            var path = `http://localhost:5000/api/cars?maker=${maker}`
+            // path = path + '&' + this.getRangePrice(price)
         }
         else if(maker == "" && color != "") { 
-            return  `http://localhost:5000/api/cars?&color_slug=${color}`
+            var path = `http://localhost:5000/api/cars?color_slug=${color}`
+            // path = path + '&' + this.getRangePrice(price)
         }
+        // else if(maker == "" && color == "" && price != "") {
+        //     var path = `http://localhost:5000/api/cars?`
+        //     // path = path + this.getRangePrice(price)
+        // }
         else {
-            return "http://localhost:5000/api/cars/all"
+            var path = "http://localhost:5000/api/cars/all"
         }
 
-  }
+        return path
+
+        
+
+    },
+
+    getRangePrice(price) {
+        if(price != "") {
+            var prices = price.split('-');
+            return `price_min=${prices[0]}&price_max=${prices[1]}`;
+        }
+        return '';
+    }
 
   },
   

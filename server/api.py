@@ -49,7 +49,8 @@ def cars_filter():
     manufacture_year = params.get('manufacture_year') if (params.get('manufacture_year') != None ) else ''
     mileage = params.get('mileage') if (params.get('mileage') != None ) else ''
     model = params.get('model')
-    price_eur = int(params.get('price_eur')) if (params.get('price_eur') != None ) else ''
+    price_min = params.get('price_min')
+    price_max = params.get('price_max')
     seat_count = params.get('seat_count') if (params.get('seat_count') != None ) else ''
     transmission = params.get('transmission')
 
@@ -104,6 +105,15 @@ def cars_filter():
     if transmission:
         query += ' transmission=? AND'
         to_filter.append(transmission)
+    
+    if price_min:
+        query += ' price_eur>? AND'
+        to_filter.append(price_min)
+    
+    if price_max:
+        query += ' price_eur<? AND'
+        to_filter.append(price_max)
+
 
     if not (car_id or color_slug or door_count or engine_displacement or engine_power or fuel_type or maker 
             or manufacture_year or mileage or model or seat_count or transmission):
