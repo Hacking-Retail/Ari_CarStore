@@ -1,14 +1,16 @@
 '''API'''
 import json
 import sqlite3
+from flask_cors import CORS
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
 app.config["DEBUG"] = True
 
-#get datas
-#data = json.load(open('Dataset-Hackathon.json'))
+# enable CORS
+CORS(app, resources={r'/*': {'origins': '*'}})
+
 
 def dict_factory(cursor, row):
     d = {}
@@ -44,7 +46,7 @@ def cars_filter():
     engine_power = params.get('engine_power') if (params.get('engine_power') != None ) else ''
     fuel_type = params.get('fuel_type')
     maker = params.get('maker')
-    manufacture_year = "{}.0".format(int(params.get('manufacture_year')) if (params.get('manufacture_year') != None ) else '')
+    manufacture_year = params.get('manufacture_year') if (params.get('manufacture_year') != None ) else ''
     mileage = params.get('mileage') if (params.get('mileage') != None ) else ''
     model = params.get('model')
     price_eur = int(params.get('price_eur')) if (params.get('price_eur') != None ) else ''
@@ -117,7 +119,8 @@ def cars_filter():
     results = cur.execute(query, to_filter).fetchall()
 
  
-    return jsonify(results)
+    return jsonify({'cars':results,
+                    'status':'success'})
 
 
 #error 404 page

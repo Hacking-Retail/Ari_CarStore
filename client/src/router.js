@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Books from './components/Books.vue';
-import Ping from './components/Ping.vue';
+import NotFound from './components/NotFound.vue';
+import Cars from './components/Cars.vue'
 
 Vue.use(Router);
 
@@ -11,13 +11,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Books',
-      component: Books,
+      name: 'Cars',
+      component: Cars,
     },
     {
-      path: '/ping',
-      name: 'Ping',
-      component: Ping,
-    },
+      path: '*',
+      name: 'NotFount',
+      component: NotFound,
+    }
   ],
 });
